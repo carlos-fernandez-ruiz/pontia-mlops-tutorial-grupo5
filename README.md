@@ -51,7 +51,15 @@ Se ha creado la carpeta `.github/workflows/` con el fichero `integration.yml`, q
   - Actualización y publicación del modelo entrenado en la sección de **Releases** de GitHub.
 - Se creó una PR con estos cambios. Tras algunos fallos iniciales en el pipeline por equivocación nuestra en el código, Sheila revisó y aprobó la PR, integrando el workflow de build en `main`.
 
----
+
+### 8. Pipeline de deploy (`deploy.yml`)
+
+- Se ha clonado el repositorio del grupo a local para seguir con el ejercicio
+- Se ha configurado el fichero `deploy.yml` en `.github/workflows/` usando como base el fichero proporcionado por el profesor.
+- Se copia el directorio `deployment`, con el endpoint y sus dependencias el directorio `app`, tal cual de la documentación del ejecrcicio.
+- Se usa proyecto `Render` preexistente asociado a este repositorio
+- `deploy.yml` llama a `Render` con el webhook contenido en 'secret' *RENDER_DEPLOY_HOOK* de este repositorio
+- Se crea rama `deploy` en local, se hace un commit de los cambios sobre ella y se hace un push a este repositorio
 
 ## Pendiente
 
