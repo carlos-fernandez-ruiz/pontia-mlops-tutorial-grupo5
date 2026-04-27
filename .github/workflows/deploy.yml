@@ -27,8 +27,11 @@ jobs:
           MODEL_RELEASE: ${{ inputs.model_release }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          latest=$(git tag | sort -r | head -n1)
           if [[ "${{ inputs.api_version }}" != "latest" ]]; then
             git checkout ${{ inputs.api_version }}
+          else
+            git checkout $latest
           fi
-          echo "se estaría haciendo el curl con el modelo ${MODEL_RELEASE} y ls version ${GITHUB_REF}"
-          #curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
+          #echo "se estaría haciendo el curl con el modelo ${MODEL_RELEASE} y ls version ${GITHUB_REF}"
+          curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
