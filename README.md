@@ -60,15 +60,32 @@ Se ha creado la carpeta `.github/workflows/` con el fichero `integration.yml`, q
   - Actualización y publicación del modelo entrenado en la sección de **Releases** de GitHub.
 - Se creó una PR con estos cambios. Tras algunos fallos iniciales en el pipeline por equivocación nuestra en el código, Sheila revisó y aprobó la PR, integrando el workflow de build en `main`.
 
----
+
+### 8. Pipeline de deploy (`deploy.yml`)
+
+- Se ha clonado el repositorio del grupo a local para seguir con el ejercicio
+- Se ha configurado el fichero `deploy.yml` en `.github/workflows/` usando como base el fichero proporcionado por el profesor.
+- Se copia el directorio `deployment`, con el endpoint y sus dependencias el directorio `app`, tal cual de la documentación del ejecrcicio.
+- Se usa proyecto `Render` preexistente asociado a este repositorio
+- `deploy.yml` llama a `Render` con el webhook contenido en 'secret' *RENDER_DEPLOY_HOOK* de este repositorio
+- Se crea rama `deploy` en local, se hace un commit de los cambios sobre ella y se hace un push a este repositorio
+- `Render`tiene actiavado por defecto *auto-deploy*,  con lo que con cada nuevo commit a la rama conectada - main en este caso -, si pasa los test, el servicio se despliega de nuevo.  `deploy` se llama vía *workflow dispatch* y llama a `Render`, por lo que no se desa *auto-deploy*. Se desactiva. Documentación: [Render auto-deploy](https://render.com/docs/deploys)
+
+### 9. Rollback 
+
+- En el contexto de devops un rollback es: 'En el contexto de DevOps, un rollback (o reversión) es el proceso de restaurar una aplicación, servicio o infraestructura a un estado estable anterior inmediatamente después de que una nueva implementación (deploy) o cambio haya causado problemas, errores o fallas inesperadas'
+- En `Render`, en la pestaña *Events*, se puede ver el listado de deploys y hacer rollabk a uno de ellos
+- Otra opción que se ha planteado es modificar el `deploy.yml` para que permita seleccionar versión de la API y modelo a desplegar en `Render`. Para ello:
+  - Se asume que a los commit que són para deploy se les asigna un tag. Los tags van siempre en orden creciente
+  - Cuando se hace el push, además de la rama también se debe hacer un push de los tag (git push --tags), dado que por defecto se quedan en local
+  - Se introducen 2 inputs, *api_verion* y *model_version* ambos con default a *latest*. En el primero se puede integar el tag que se corresponde a la versión de la API que se desea y en el segundo el tag de la release del modelo
+  - En `deploy`se hace un *git checkout* al tag especificado. Si se ha dejado en *latest*, lo hace al tag más alto (más reciente)
+  - Se ha creado una variable de entorno en el repositorio llamada *MODEL_RELEASE* que se rellena con lo entrado en *model_version* Esta variable de entorno es usada por *app/main.py* para cargar el modelo deseado. Si se ha dejado en *latest*, se carga el más reciente
+
 
 ## Pendiente
 
-### Por parte de Paris y Claudi
-
-- **Pipeline de deploy**: implementar el workflow de despliegue continuo como indica el enunciado..
-
-### Por parte de todos
+#### Por parte de todos
 
 - **Simulación de Rollback**: informarse sobre en qué consiste y cómo implementarla en el contexto del proyecto.
 - **Revisión del entregable**: verificar conjuntamente que se cumplen todos los requisitos del enunciado antes de la entrega.
