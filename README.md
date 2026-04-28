@@ -9,6 +9,10 @@
 - Claudi Berenguer
 - Carlos Fernández
 
+## Enlaces
+proyecto en render: https://pontia-mlops-tutorial-grupo5.onrender.com/
+proyecto blueprint: https://pontia-mlops-tutorial-grupo5-render.onrender.com/
+repositorio github: https://github.com/carlos-fernandez-ruiz/pontia-mlops-tutorial-grupo5/
 ---
 
 ## Trabajo realizado
