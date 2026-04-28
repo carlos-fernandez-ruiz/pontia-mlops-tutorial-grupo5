@@ -2,6 +2,15 @@
 
 ---
 
+## Integrantes del Grupo 5
+
+- Guillermo Parés
+- Sheila Pena
+- Claudi Berenguer
+- Carlos Fernández
+
+---
+
 ## Trabajo realizado
 
 ### 1. Configuración inicial del repositorio
